@@ -22,5 +22,6 @@ int 	ft_printf(const char *s, ...);
 int	ft_format(va_list ap, int i);
 int	ft_point(va_list ap);
 int	ft_index(char c);
+int	ft_utoa(va_list ap);
 
 #endif

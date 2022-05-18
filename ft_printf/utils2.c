@@ -28,14 +28,14 @@ char	*ft_itoa(int n, char *base)
 
 int	ft_putnbr_dec(va_list ap)
 {
-	int	n;
+	long int	n;
 	char	*base = "0123456789";
 	char	*str;
 	int	n_len;
 
 	n = va_arg(ap, int);
 	if (n == -2147483648)
-		return(write(1, "-2147483648", 12));
+		return(write(1, "-2147483648", 11));
 	str = ft_itoa(n, base);
 	n_len = ft_strlen(str);
 	free(str);
@@ -65,12 +65,12 @@ char	*ft_itoa_base(unsigned long long int n, char *base)
 
 int	ft_putnbr_hex(va_list ap)
 {
-	unsigned long long int	n;
+	unsigned int	n;
 	int	n_len;
 	char *base = "0123456789abcdef";
 	char	*str;
 
-	n = va_arg(ap, unsigned long long int);
+	n = va_arg(ap, unsigned int);
 	str = ft_itoa_base(n, base);
 	n_len = ft_strlen(str);
 	free(str);
@@ -79,13 +79,13 @@ int	ft_putnbr_hex(va_list ap)
 
 int	ft_putnbr_hexm(va_list ap)
 {
-	int	n;
+	unsigned int	n;
 	int	n_len;
 	char *base = "0123456789ABCDEF";
 	char	*str;
 
-	n = va_arg(ap, int);
-	str = ft_itoa_base((unsigned int) n, base);
+	n = va_arg(ap, unsigned int);
+	str = ft_itoa_base(n, base);
 	n_len = ft_strlen(str);
 	free(str);
 	return (n_len);
