@@ -1,41 +1,53 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akouoi <akouoi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/19 16:52:15 by akouoi            #+#    #+#             */
+/*   Updated: 2022/05/19 20:49:29 by akouoi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-int	ft_index(char c)
+int	id(char c)
 {
-	int	i;
+	int		i;
 	char	*set;
 
-	set = "cspdiuxX";
+	set = "cspdiuxX +#";
 	i = 0;
-	while(set[i])
+	while (set[i])
 	{
 		if (set[i] == c)
 			return (i);
 		i++;
 	}
-	return (i);
+	return (20);
 }
 
-int	ft_point(va_list ap)
+int	ft_point(va_list ap, int i)
 {
 	unsigned long long int	n;
-	int	n_len;
-	char *base = "0123456789abcdef";
-	char	*str;
+	int						n_len;
+	char					*str;
 
-	n = va_arg(ap, unsigned long long int);
+	if (i == 2)
+		n = va_arg(ap, unsigned long long int);
 	if (n == 0)
-		return(write(1, "(nil)", 5));
+		return (write(1, "(nil)", 5));
 	write(1, "0x", 2);
-	str = ft_itoa_base(n, base);
+	str = ft_itoa_base(n, "0123456789abcdef");
 	n_len = ft_strlen(str);
 	free(str);
-	return(2 + n_len);
+	return (2 + n_len);
 }
 
 int	ft_format(va_list ap, int i)
 {
-	int	(*fct[9])(va_list);
+	int	(*fct[10])(va_list, int);
 
 	fct[0] = ft_putchar;
 	fct[1] = ft_putstr;
@@ -44,50 +56,61 @@ int	ft_format(va_list ap, int i)
 	fct[4] = ft_putnbr_dec;
 	fct[5] = ft_utoa;
 	fct[6] = ft_putnbr_hex;
-	fct[7] = ft_putnbr_hexm;
-	return (fct[i](ap));
+	fct[7] = ft_putnbr_hex;
+	fct[8] = ft_putnbr_dec;
+	fct[9] = ft_putnbr_dec;
+	return (fct[i % 10](ap, i));
 }
 
-int 	ft_printf(const char *s, ...)
+int	ft_printf(const char *s, ...)
 {
-	int	i;
-	va_list	ap;
+	va_list		ap;
+	int			i;
 
-	if (!s)
-		return (-1);
 	i = 0;
 	va_start(ap, s);
 	while (*s)
 	{
 		if (*s == '%')
 		{
-			if (ft_index(*(++s)) < 8)
-				i += ft_format(ap, ft_index(*s));
+			if (id(*++s) < 10)
+			{
+				i += ft_format(ap, id(*s) - 7 * (*s == 32 && *(s + 1) == 's'));
+				s += (id(*s) == 8 || id(*s) == 9);
+			}
+			if (id(*s == 10) && (id(*(s + 1)) == 6 || id(*(s + 1)) == 7))
+				i += write (1, "0", 1) + ft_format(ap, 10 + id(*(s++ + 1)));
 			else if (*s == '%')
-				i += write (1, s, 1);
+					i += write (1, s, 1);
 		}
-		else
+		else if (*s)
 			i += write (1, s, 1);
 		s++;
 	}
+	va_end(ap);
 	return (i);
 }
 
-// #include <limits.h>
 // int	main()
 // {
 // 	char *p = "hello";
-  	// printf(" | count :%d\n", printf("U : %u\n", 16));
-  	// printf(" | count :%d\n", ft_printf("U : %u\n", 16));
-// 	printf(" | count :%d\n", printf("point : %p\n", &p));
-// 	printf(" | count :%d\n", ft_printf("point : %p\n", &p));
-// 	printf(" | count :%d\n", printf("hex : %x\n", 0));
-// 	printf(" | count :%d\n", ft_printf("hex : %x\n", 0));
-// 	printf(" | count :%d\n", ft_printf("%%\n"));
-//  	printf(" | count :%d\n", printf("HEX : %X\n", 16));
-//  	printf(" | count :%d\n", ft_printf("HEX : %X\n", 16));
-// 	printf(" | count :%d\n", printf("char - string - dec - int|| %c %s %d %i", 'c', "hello", 2147, -2147483647));
-// 	printf(" | count :%d\n", ft_printf("char - string - dec - int|| %c %s %d %i", 'c', "hello", 2147, -2147483647));
-// 	printf(" | count :%d\n", printf("printf: %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %c%%", 'A', "42", 42, 42 ,42 , 42, 42, 'B', "-42", -42, -42 ,-42 ,-42, 42, 'C', "0", 0, 0 ,0 ,0, 42, 0));
-// 	printf(" | count :%d\n", ft_printf("ft_pri: %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %c%%", 'A', "42", 42, 42 ,42 , 42, 42, 'B', "-42", -42, -42 ,-42 ,-42, 42, 'C', "0", 0, 0 ,0 ,0, 42, 0));
+// 	printf(" | count : %d\n", printf(NULL));
+// 	printf(" | count : %d\n", ft_printf(""));
+//   	printf(" | count :%d\n", printf("PF U : %u", 16));
+//   	printf(" | count :%d\n", ft_printf("FT U : %u", 16));
+// 	printf(" | count :%d\n", printf("PF point : %p", &p));
+// 	printf(" | count :%d\n", ft_printf("FT point : %p", &p));
+// 	printf(" | count :%d\n", printf("PF hex : %x", -1));
+// 	printf(" | count :%d\n", ft_printf("FT hex : %x", -1));
+//  	printf(" | count :%d\n", printf("PF HEX : %X", 16));
+//  	printf(" | count :%d\n", ft_printf("FT HEX : %X", 16));
+// 	printf(" | count :%d\n", ft_printf("FT %%"));
+// 	printf(" | count :%d\n", printf("PF char - string - dec - int
+//		|| %c %s %d %i", 'c', "hello", 2147, -2147483647));
+// 	printf(" | count :%d\n", ft_printf("FT char - string - dec - int
+//		|| %c %s %d %i", 'c', "hello", 2147, -2147483647));
+// 	printf(" | count :%d\n", printf("PF space d : % d", 1));
+// 	printf(" | count :%d\n", ft_printf("FT space d : % d", 1));
+// 	printf(" | count :%d\n", printf("PF plus d : %+d", 1));
+// 	printf(" | count :%d\n", ft_printf("FT plus d : %+d", 1));
 // }

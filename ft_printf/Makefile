@@ -12,11 +12,14 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	ar -rc $(NAME) $^
 	ranlib $(NAME)
+
 %.o : %.c
 	$(CC) $(CFLAG) -c $^ -o $@
 
+bonus : all
+
 clean:
-	rm -f $(OBJ) $(BONUS_OBJ)
+	rm -f $(OBJ)
 
 fclean: clean
 	rm -f $(NAME)
