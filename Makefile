@@ -2,8 +2,9 @@ NAME = libftprintf.a
 CC = gcc
 CFLAG = -Wall -Werror -Wextra
 SRC = ft_printf.c \
-	utils.c \
-	utils2.c
+	ft_dec.c \
+	ft_hex.c \
+	ft_str.c
 
 OBJ= $(subst .c,.o,$(SRC))
 

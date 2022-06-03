@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_str.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akouoi <akouoi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 16:52:20 by akouoi            #+#    #+#             */
-/*   Updated: 2022/05/19 20:52:07 by akouoi           ###   ########.fr       */
+/*   Updated: 2022/05/24 09:40:01 by akouoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	ft_putstr(va_list ap, int i)
 {
-	char	*s;
+	char	*str;
 
 	i = 0;
-	s = va_arg(ap, void *);
-	if (!s)
+	str = va_arg(ap, void *);
+	if (!str)
 		return (write(1, "(null)", 6));
-	while (s[i])
-		i += write (1, &s[i], 1);
+	while (str[i])
+		i += write (1, &str[i], 1);
 	return (i);
 }
 
@@ -29,7 +29,7 @@ int	ft_putchar(va_list ap, int i)
 {
 	int	c;
 
-	if (i == 0)
+	if (!i)
 		c = va_arg(ap, int);
 	return (write(1, &c, 1));
 }
@@ -57,28 +57,4 @@ int	ft_nblen(unsigned long long int n, unsigned long long int base_len)
 		n /= base_len;
 	}
 	return (power + 1);
-}
-
-int	ft_utoa(va_list ap, int i)
-{
-	unsigned int	n;
-	char			*str;
-	int				n_len;
-
-	if (i == 5)
-		n = va_arg(ap, unsigned int);
-	n_len = ft_nblen(n, 10);
-	str = malloc((n_len + 1) * sizeof(char));
-	if (!str)
-		return (0);
-	str[n_len] = 0;
-	while (--n_len >= 0)
-	{
-		str[n_len] = n % 10 + '0';
-		n /= 10;
-	}
-	write(1, str, ft_strlen(str));
-	n_len = ft_strlen(str);
-	free(str);
-	return (n_len);
 }
