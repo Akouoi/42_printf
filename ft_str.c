@@ -6,13 +6,13 @@
 /*   By: akouoi <akouoi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 16:52:20 by akouoi            #+#    #+#             */
-/*   Updated: 2022/05/24 09:40:01 by akouoi           ###   ########.fr       */
+/*   Updated: 2022/07/07 15:53:14 by akouoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_putstr(va_list ap, int i)
+int	pf_putstr(va_list ap, int i)
 {
 	char	*str;
 
@@ -25,7 +25,7 @@ int	ft_putstr(va_list ap, int i)
 	return (i);
 }
 
-int	ft_putchar(va_list ap, int i)
+int	pf_putchar(va_list ap, int i)
 {
 	int	c;
 
@@ -34,7 +34,7 @@ int	ft_putchar(va_list ap, int i)
 	return (write(1, &c, 1));
 }
 
-size_t	ft_strlen(const char *str)
+size_t	pf_strlen(const char *str)
 {
 	size_t	i;
 
@@ -46,7 +46,7 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-int	ft_nblen(unsigned long long int n, unsigned long long int base_len)
+int	pf_nblen(unsigned long long int n, unsigned long long int base_len)
 {
 	int	power;
 

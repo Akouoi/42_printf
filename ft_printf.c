@@ -6,7 +6,7 @@
 /*   By: akouoi <akouoi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 16:52:15 by akouoi            #+#    #+#             */
-/*   Updated: 2022/05/24 10:25:14 by akouoi           ###   ########.fr       */
+/*   Updated: 2022/07/07 15:58:10 by akouoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,64 +14,79 @@
 
 int	id(char c)
 {
-	int		i;
+	int		j;
 	char	*set;
 
 	set = "cspdiuxX +#%";
-	i = 0;
-	while (set[i])
+	j = 0;
+	while (set[j])
 	{
-		if (set[i] == c)
-			return (i);
-		i++;
+		if (set[j] == c)
+			return (j);
+		j++;
 	}
 	return (20);
 }
 
-int	ft_format(va_list ap, int i)
+// int	ft_format(va_list ap, int j)
+// {
+// 	int	(*fct[10])(va_list, int);
+
+// 	fct[0] = pf_putchar;
+// 	fct[1] = pf_putstr;
+// 	fct[2] = pf_point;
+// 	fct[3] = pf_putnbr_dec;
+// 	fct[4] = pf_putnbr_dec;
+// 	fct[5] = pf_utoa;
+// 	fct[6] = pf_putnbr_hex;
+// 	fct[7] = pf_putnbr_hex;
+// 	fct[8] = pf_putnbr_dec;
+// 	fct[9] = pf_putnbr_dec;
+// 	return (fct[j % 10](ap, j));
+// }
+int	ft_format(va_list ap, int j)
 {
 	int	(*fct[10])(va_list, int);
 
-	fct[0] = ft_putchar;
-	fct[1] = ft_putstr;
-	fct[2] = ft_point;
-	fct[3] = ft_putnbr_dec;
-	fct[4] = ft_putnbr_dec;
-	fct[5] = ft_utoa;
-	fct[6] = ft_putnbr_hex;
-	fct[7] = ft_putnbr_hex;
-	fct[8] = ft_putnbr_dec;
-	fct[9] = ft_putnbr_dec;
-	return (fct[i % 10](ap, i));
+	fct[c] = pf_putchar;
+	fct[s] = pf_putstr;
+	fct[p] = pf_point;
+	fct[d] = pf_putnbr_dec;
+	fct[i] = pf_putnbr_dec;
+	fct[u] = pf_utoa;
+	fct[x] = pf_putnbr_hex;
+	fct[X] = pf_putnbr_hex;
+	fct[8] = pf_putnbr_dec;
+	fct[9] = pf_putnbr_dec;
+	return (fct[j % 10](ap, j));
 }
-
 int	ft_printf(const char *s, ...)
 {
 	va_list		ap;
-	int			i;
+	int			k;
 	int			j;
 
-	i = 0;
+	k = 0;
 	j = 0;
 	va_start(ap, s);
 	while (s[j])
 	{
 		if (s[j] == '%' && id(s[++j]) < 10)
 		{
-			i += ft_format(ap, id(s[j]) - 7 * (s[j] == 32 && s[j + 1] == 's'));
+			k += ft_format(ap, id(s[j]) - 7 * (s[j] == 32 && s[j + 1] == 's'));
 			j += (id(s[j]) == 8 || id(s[j]) == 9);
 		}
 		else if ((s[j - 1] == '%' && id(s[j]) == 10)
 			&& (id(s[j + 1]) == 6 || id(s[j + 1]) == 7))
-			i += write (1, "0", 1) + ft_format(ap, 10 + id(s[j++ + 1]));
+			k += write (1, "0", 1) + ft_format(ap, 10 + id(s[j++ + 1]));
 		else if (s[j] == '%')
-			i += write (1, &s[j], 1);
+			k += write (1, &s[j], 1);
 		else if (s[j] != '%')
-			i += write (1, &s[j], 1);
+			k += write (1, &s[j], 1);
 		j++;
 	}
 	va_end(ap);
-	return (i);
+	return (k);
 }
 /*
 int	main(void)
