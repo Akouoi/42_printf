@@ -6,7 +6,7 @@
 /*   By: akouoi <akouoi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 09:45:14 by akouoi            #+#    #+#             */
-/*   Updated: 2022/07/08 11:43:48 by akouoi           ###   ########.fr       */
+/*   Updated: 2022/07/08 14:33:54 by akouoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ int	pf_putnbr_hex(va_list ap, int k)
 	n = va_arg(ap, unsigned int);
 	if (n == 0 && k < X)
 		return (0);
-	if (k >= x - 1)
+	if (k == x - 1 || k == x)
 		base = "0123456789abcdef";
-	if (n != 0 && k == x - 1)
+	if (n != 0 && k == x - 80)
 		n_len += write (1, "x", 1);
-	if (k <= X)
+	if (k == X - 1 || k == X)
 		base = "0123456789ABCDEF";
-	if (n != 0 && k == X - 1)
+	if (n != 0 && k == X - 80)
 		n_len += write (1, "X", 1);
 	str = pf_itoa_base(n, base);
 	n_len += pf_strlen(str);
@@ -65,7 +65,7 @@ int	pf_point(va_list ap, int k)
 	int						n_len;
 	char					*str;
 
-	if (k == 2)
+	if (k == p)
 		n = va_arg(ap, unsigned long long int);
 	if (n == 0)
 		return (write(1, "(nil)", 5));

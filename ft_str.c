@@ -6,44 +6,44 @@
 /*   By: akouoi <akouoi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 16:52:20 by akouoi            #+#    #+#             */
-/*   Updated: 2022/07/07 15:53:14 by akouoi           ###   ########.fr       */
+/*   Updated: 2022/07/08 14:31:51 by akouoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	pf_putstr(va_list ap, int i)
+int	pf_putstr(va_list ap, int k)
 {
 	char	*str;
 
-	i = 0;
+	k = 0;
 	str = va_arg(ap, void *);
 	if (!str)
 		return (write(1, "(null)", 6));
-	while (str[i])
-		i += write (1, &str[i], 1);
-	return (i);
+	while (str[k])
+		k += write (1, &str[k], 1);
+	return (k);
 }
 
-int	pf_putchar(va_list ap, int i)
+int	pf_putchar(va_list ap, int k)
 {
-	int	c;
+	int	ch;
 
-	if (!i)
-		c = va_arg(ap, int);
-	return (write(1, &c, 1));
+	if (k)
+		ch = va_arg(ap, int);
+	return (write(1, &ch, 1));
 }
 
 size_t	pf_strlen(const char *str)
 {
-	size_t	i;
+	size_t	k;
 
 	if (!str)
 		return (0);
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	k = 0;
+	while (str[k])
+		k++;
+	return (k);
 }
 
 int	pf_nblen(unsigned long long int n, unsigned long long int base_len)

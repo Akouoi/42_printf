@@ -6,7 +6,7 @@
 /*   By: akouoi <akouoi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 16:52:09 by akouoi            #+#    #+#             */
-/*   Updated: 2022/07/08 11:37:40 by akouoi           ###   ########.fr       */
+/*   Updated: 2022/07/08 14:41:16 by akouoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	pf_putnbr_dec(va_list ap, int k)
 	if (n == -2147483648)
 		return (write(1, "-2147483648", 11));
 	str = pf_itoa(n, "0123456789");
+	// printf("str = %ld %s\n", pf_strlen(str), str);
 	n_len += pf_strlen(str);
 	free(str);
 	return (n_len);
