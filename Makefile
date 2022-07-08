@@ -18,8 +18,8 @@ $(NAME): $(OBJ)
 %.o : %.c
 	$(CC) $(CFLAG) -c $^ -o $@
 
-build:
-	$(CC) $(CFLAG) -o $(OBJ) $(PROG)
+build: all
+	$(CC) $(OBJ) $(CFLAG) -o $(PROG)
 
 bonus : all
 

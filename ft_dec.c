@@ -6,7 +6,7 @@
 /*   By: akouoi <akouoi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 16:52:09 by akouoi            #+#    #+#             */
-/*   Updated: 2022/07/07 15:56:36 by akouoi           ###   ########.fr       */
+/*   Updated: 2022/07/08 11:37:40 by akouoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int	pf_putnbr_dec(va_list ap, int k)
 	n = va_arg(ap, int);
 	if (n >= 0)
 	{
-		if (k == 8)
+		if (k == sp)
 			n_len += write(1, " ", 1);
-		if (k == 9)
+		if (k == pl)
 			n_len += write(1, "+", 1);
 	}
 	if (n == -2147483648)
@@ -67,7 +67,7 @@ int	pf_utoa(va_list ap, int k)
 	char			*str;
 	int				n_len;
 
-	if (k == 5)
+	if (k == u)
 		n = va_arg(ap, unsigned int);
 	n_len = pf_nblen(n, 10);
 	str = malloc((n_len + 1) * sizeof(char));
