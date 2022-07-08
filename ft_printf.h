@@ -6,7 +6,7 @@
 /*   By: akouoi <akouoi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 16:52:24 by akouoi            #+#    #+#             */
-/*   Updated: 2022/07/07 15:52:42 by akouoi           ###   ########.fr       */
+/*   Updated: 2022/07/08 09:50:53 by akouoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@
 # include <stdio.h>
 # include <ctype.h>
 # include <string.h>
+
+typedef struct s_arg
+{
+	va_list	ap;
+	char	*str;
+}	t_arg;
 
 enum e_move
 {

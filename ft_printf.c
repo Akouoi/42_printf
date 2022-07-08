@@ -6,7 +6,7 @@
 /*   By: akouoi <akouoi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 16:52:15 by akouoi            #+#    #+#             */
-/*   Updated: 2022/07/07 15:58:10 by akouoi           ###   ########.fr       */
+/*   Updated: 2022/07/08 09:52:41 by akouoi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,12 @@ int	ft_printf(const char *s, ...)
 	va_list		ap;
 	int			k;
 	int			j;
+	t_arg		arg;
 
 	k = 0;
 	j = 0;
 	va_start(ap, s);
+	va_start(arg.ap, s);
 	while (s[j])
 	{
 		if (s[j] == '%' && id(s[++j]) < 10)
@@ -88,7 +90,7 @@ int	ft_printf(const char *s, ...)
 	va_end(ap);
 	return (k);
 }
-/*
+
 int	main(void)
 {
 	char *p = "hello";
@@ -109,4 +111,4 @@ int	main(void)
 	printf(" | count :%d%s", ft_printf("FT sd : % d", 1), yo);
 	printf(" | count :%d%s", printf("PF +d : %+d", 1), yo);
 	printf(" | count :%d%s", ft_printf("FT +d : %+d", 1), yo);
-}*/
+}

@@ -1,3 +1,4 @@
+PROG = exec
 NAME = libftprintf.a
 CC = gcc
 CFLAG = -Wall -Werror -Wextra
@@ -16,6 +17,9 @@ $(NAME): $(OBJ)
 
 %.o : %.c
 	$(CC) $(CFLAG) -c $^ -o $@
+
+build:
+	$(CC) $(CFLAG) -o $(OBJ) $(PROG)
 
 bonus : all
 
